@@ -39,7 +39,6 @@ public class TransactionDao implements Irepository<Transaction> {
 			Transaction updateTransaction = find(id);
 			updateTransaction.setBalance(entity.getBalance());
 			updateTransaction.setDate(entity.getDate());
-			updateTransaction.setTransactionCode(entity.getTransactionCode());
 			updateTransaction.setTransactionName(entity.getTransactionName());
 			updateTransaction.setTransactionNo(entity.getTransactionNo());
 

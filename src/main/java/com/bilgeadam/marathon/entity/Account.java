@@ -19,7 +19,7 @@ import lombok.ToString;
 
 @Getter
 @Setter
-@NoArgsConstructor
+@NoArgsConstructor 
 @Entity
 @Table(name = "ACCOUNT")
 @ToString
@@ -33,8 +33,8 @@ public class Account {
 	private long accountNo;
 	@Column
 	private String accountType;
-	@ManyToOne(cascade = CascadeType.MERGE)
-	@JoinColumn(name = "customerId", nullable = false, referencedColumnName = "id")
+	@ManyToOne(cascade = CascadeType.PERSIST)
+	@JoinColumn(name = "customerId", nullable = true, referencedColumnName = "id")
 	private Customer customer;
 	@OneToMany(mappedBy = "account")
 	private List<Transaction> transactionList;

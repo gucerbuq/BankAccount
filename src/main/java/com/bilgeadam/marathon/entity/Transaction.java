@@ -1,6 +1,6 @@
 package com.bilgeadam.marathon.entity;
 
-import java.util.Date;
+import java.time.LocalDate;
 
 import jakarta.persistence.CascadeType;
 import jakarta.persistence.Column;
@@ -29,9 +29,7 @@ public class Transaction {
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private long id;
 	@Column
-	private Date date;
-	@Column
-	private String transactionCode;
+	private LocalDate date;
 	@Column
 	private long transactionNo;
 	@Column

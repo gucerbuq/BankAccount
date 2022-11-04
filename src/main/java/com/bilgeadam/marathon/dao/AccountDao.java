@@ -5,6 +5,7 @@ import java.util.List;
 import org.hibernate.Session;
 
 import com.bilgeadam.marathon.entity.Account;
+import com.bilgeadam.marathon.entity.Customer;
 
 import jakarta.persistence.TypedQuery;
 
@@ -40,6 +41,29 @@ public class AccountDao implements Irepository<Account>{
 			updateAccount.setAccountType(entity.getAccountType());
 			updateAccount.setAccountNo(entity.getAccountNo());
 			updateAccount.setTransactionList(entity.getTransactionList());
+			updateAccount.setCustomer(entity.getCustomer());
+
+			session = databaseConnection();
+			session.getTransaction().begin();
+			session.merge(updateAccount);
+			session.getTransaction().commit();
+		} catch (Exception e) {
+			e.printStackTrace();
+			System.out.println("Some problem occured while UPDATING Account data.");
+		} finally {
+			session.close();
+		}
+		
+	}
+	
+	
+	public void update(long id, Customer customer) {
+		
+		Session session = null;
+
+		try {
+			Account updateAccount = find(id);
+			updateAccount.setCustomer(customer);
 
 			session = databaseConnection();
 			session.getTransaction().begin();

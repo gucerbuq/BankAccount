@@ -5,7 +5,6 @@ import java.util.List;
 import org.hibernate.Session;
 import com.bilgeadam.marathon.entity.Customer;
 
-import jakarta.persistence.TypedQuery;
 
 public class CustomerDao implements Irepository<Customer> {
 
@@ -40,7 +39,6 @@ public class CustomerDao implements Irepository<Customer> {
 			updateCustomer.setLastName(entity.getLastName());
 			updateCustomer.setCustomerNo(entity.getCustomerNo());
 			updateCustomer.setAccountList(entity.getAccountList());
-			updateCustomer.setBranchList(entity.getBranchList());
 			
 
 			session = databaseConnection();
@@ -85,12 +83,15 @@ public class CustomerDao implements Irepository<Customer> {
 		
 		Session session = databaseConnection();
 
-		String hql = "SELECT cust FROM Customer as cust";
+//		String hql = " FROM Customer";
+//
+//		TypedQuery<Customer> typedQuery = session.createQuery(hql, Customer.class);
+//		List<Customer> customerList = typedQuery.getResultList();
 
-		TypedQuery<Customer> typedQuery = session.createQuery(hql, Customer.class);
-		List<Customer> customerList = typedQuery.getResultList();
+		return session.createQuery("SELECT a FROM Customer a", Customer.class).getResultList();
 
-		return customerList;
+		
+//		return customerList;
 		
 	}
 

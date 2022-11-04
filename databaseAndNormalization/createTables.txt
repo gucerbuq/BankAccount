@@ -1,0 +1,73 @@
+
+CREATE TABLE IF NOT EXISTS public.account
+(
+    id bigint NOT NULL,
+    accountno bigint,
+    accounttype character varying(255) COLLATE pg_catalog."default",
+    customerid bigint NOT NULL,
+    CONSTRAINT account_pkey PRIMARY KEY (id)
+);
+
+CREATE TABLE IF NOT EXISTS public.branch
+(
+    id bigint NOT NULL,
+    branchname character varying(255) COLLATE pg_catalog."default",
+    branchno integer,
+    CONSTRAINT branch_pkey PRIMARY KEY (id)
+);
+
+CREATE TABLE IF NOT EXISTS public.customer
+(
+    id bigint NOT NULL,
+    customerno integer,
+    firstname character varying(255) COLLATE pg_catalog."default",
+    lastname character varying(255) COLLATE pg_catalog."default",
+    CONSTRAINT customer_pkey PRIMARY KEY (id)
+);
+
+CREATE TABLE IF NOT EXISTS public.customer_branch
+(
+    customerid bigint NOT NULL,
+    branchid bigint NOT NULL
+);
+
+CREATE TABLE IF NOT EXISTS public.transactions
+(
+    id bigint NOT NULL,
+    balance integer,
+    date timestamp(6) without time zone,
+    transactioncode character varying(255) COLLATE pg_catalog."default",
+    transactionname character varying(255) COLLATE pg_catalog."default",
+    transactionno bigint,
+    account_id bigint NOT NULL,
+    CONSTRAINT transactions_pkey PRIMARY KEY (id)
+);
+
+ALTER TABLE IF EXISTS public.account
+    ADD CONSTRAINT fkhpgbvu5ow5vmt77tngya5nbv FOREIGN KEY (customerid)
+    REFERENCES public.customer (id) MATCH SIMPLE
+    ON UPDATE NO ACTION
+    ON DELETE NO ACTION;
+
+
+ALTER TABLE IF EXISTS public.customer_branch
+    ADD CONSTRAINT fkkt2lpr8mon9ylc3llm9mtdpre FOREIGN KEY (branchid)
+    REFERENCES public.branch (id) MATCH SIMPLE
+    ON UPDATE NO ACTION
+    ON DELETE NO ACTION;
+
+
+ALTER TABLE IF EXISTS public.customer_branch
+    ADD CONSTRAINT fkpqsiah8is9d8on8dw7i246wye FOREIGN KEY (customerid)
+    REFERENCES public.customer (id) MATCH SIMPLE
+    ON UPDATE NO ACTION
+    ON DELETE NO ACTION;
+
+
+ALTER TABLE IF EXISTS public.transactions
+    ADD CONSTRAINT fkdkgvbkdgs58gajnit24eka2tb FOREIGN KEY (account_id)
+    REFERENCES public.account (id) MATCH SIMPLE
+    ON UPDATE NO ACTION
+    ON DELETE NO ACTION;
+
+END;
